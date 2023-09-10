@@ -251,33 +251,26 @@ namespace WpfApp
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            if (cbFavRep.SelectedIndex > -1)
+            {
+                favouriteRep = cbFavRep.SelectedItem.ToString();
+
+                try
+                {
+                    FileUtil.SaveRepData(favouriteRep);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+
             if (MessageBox.Show("Are you sure to exit?", "Exit", MessageBoxButton.YesNoCancel) == MessageBoxResult.Yes)
             {
                 e.Cancel = false;
             }
             else
             {
-                try
-                {
-                    FileUtil.SaveDataWithScreen(championship, language, screen);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-                if (cbFavRep.SelectedIndex > -1)
-                {
-                    favouriteRep = cbFavRep.SelectedItem.ToString();
-
-                    try
-                    {
-                        FileUtil.SaveRepData(favouriteRep);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message);
-                    }
-                }
                 e.Cancel = true;
             }
         }
